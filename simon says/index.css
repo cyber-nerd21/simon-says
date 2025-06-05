@@ -1,0 +1,36 @@
+body {
+    text-align: center;
+    background-color: grey;
+    font-family: sans-serif;
+    color: white;
+  }
+  
+  .container {
+    width: 320px;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
+  
+  .btn {
+    height: 140px;
+    width: 140px;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+  
+  .green { background-color: #00a74a; }
+  .red { background-color: #9f0f17; }
+  .yellow { background-color: #fef200; }
+  .blue { background-color: #094a8f; }
+  
+  .pressed {
+    box-shadow: 0 0 20px white;
+    opacity: 0.5;
+  }
+  
+  .game-over {
+    background-color: red;
+  }
+  
