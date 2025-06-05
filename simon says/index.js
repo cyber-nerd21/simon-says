@@ -1,16 +1,26 @@
 const buttonColours = ["red", "blue", "green", "yellow"];
 
-let gamePattern = []; 
-let userClickedPattern = []; 
-let started = false; 
+let gamePattern = [];
+let userClickedPattern = [];
+let started = false;
 let level = 0;
 
-document.addEventListener("keydown", function () { 
-  if (!started) { 
-    nextSequence(); 
-    started = true; 
-  } 
-});  
+// Update the title to work for mobile
+document.getElementById("level-title").textContent = "Tap or Press Any Key to Start";
+
+// Start game function
+function startGame() {
+  if (!started) {
+    nextSequence();
+    started = true;
+  }
+}
+
+// Desktop - key press
+document.addEventListener("keydown", startGame);
+
+// Mobile - tap anywhere
+document.addEventListener("click", startGame);
 
 document.querySelectorAll(".btn").forEach(button => {
   button.addEventListener("click", function () {
@@ -41,7 +51,7 @@ function checkAnswer(currentLevel) {
     }
   } else {
     playSound("wrong");
-    document.getElementById("level-title").textContent = "Game Over, Press Any Key to Restart";
+    document.getElementById("level-title").textContent = "Game Over, Tap or Press Any Key to Restart";
     document.body.classList.add("game-over");
     setTimeout(() => document.body.classList.remove("game-over"), 200);
     startOver();
