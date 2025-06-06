@@ -5,7 +5,7 @@ let userClickedPattern = [];
 let started = false;
 let level = 0;
 
-// Update the title to work for mobile
+
 document.getElementById("level-title").textContent = "Tap or Press Any Key to Start";
 
 // Start game function
@@ -16,7 +16,7 @@ function startGame() {
   }
 }
 
-// Desktop - key press
+
 document.addEventListener("keydown", startGame);
 
 // Mobile - tap anywhere
