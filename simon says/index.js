@@ -8,7 +8,7 @@ let level = 0;
 
 document.getElementById("level-title").textContent = "Tap or Press Any Key to Start";
 
-// Start game function
+
 function startGame() {
   if (!started) {
     nextSequence();
@@ -19,7 +19,7 @@ function startGame() {
 
 document.addEventListener("keydown", startGame);
 
-// Mobile - tap anywhere
+
 document.addEventListener("click", startGame);
 
 document.querySelectorAll(".btn").forEach(button => {
