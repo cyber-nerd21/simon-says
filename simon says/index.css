@@ -10,6 +10,7 @@ body {
   font-family: 'Arial Black', sans-serif;
   text-align: center;
   padding-top: 30px;
+  transition: background-color 0.2s;
 }
 
 .title span {
@@ -87,5 +88,21 @@ body {
   z-index: 5;
   cursor: pointer;
   border: 3px solid white;
+}
+
+/* 🔄 Blink effect */
+.pressed {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+/* ❌ Wrong flash */
+body.flash {
+  animation: flash-bg 0.2s;
+}
+
+@keyframes flash-bg {
+  0% { background-color: #ff3b3b; }
+  100% { background-color: #111; }
 }
 
