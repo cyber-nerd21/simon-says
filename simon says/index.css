@@ -15,7 +15,6 @@ body {
   transition: background-color 0.2s;
 }
 
-/* TITLES */
 .subtitle {
   font-size: 1.2rem;
   color: #bbb;
@@ -33,7 +32,6 @@ body {
   font-weight: bold;
 }
 
-/* GAME BOARD */
 .circle-board {
   position: relative;
   width: 300px;
@@ -42,7 +40,6 @@ body {
   border-radius: 50%;
 }
 
-/* BUTTONS */
 .btn {
   position: absolute;
   width: 50%;
@@ -57,7 +54,6 @@ body {
   transform: scale(1.02);
 }
 
-/* COLOR STYLES */
 .green {
   background-color: #00a74a;
   top: 0;
@@ -86,7 +82,6 @@ body {
   border-bottom-right-radius: 100%;
 }
 
-/* CENTER CIRCLE (START / LEVEL) */
 .center-circle {
   position: absolute;
   top: 50%;
@@ -104,14 +99,13 @@ body {
   cursor: pointer;
   border: 3px solid white;
   padding: 0 4px;
-  text-wrap: wrap;
   word-break: break-word;
 }
 
-/* FLASH EFFECT */
 .pressed {
   opacity: 0.5;
-  transition: opacity 0.2s;
+  transform: scale(0.95);
+  transition: all 0.15s ease;
 }
 
 /* ❌ Game Over Flash */
@@ -124,7 +118,6 @@ body.flash {
   100% { background-color: #111; }
 }
 
-/* ✅ Responsive Tweak */
 @media (max-width: 400px) {
   .circle-board {
     width: 240px;
@@ -138,3 +131,4 @@ body.flash {
     line-height: 65px;
   }
 }
+
