@@ -8,6 +8,10 @@ const centerBtn = document.getElementById("center-btn");
 const scoreMsgEl = document.getElementById("score-msg");
 const highScoreEl = document.getElementById("high-score");
 
+// Preload sounds
+const ding = new Audio("assets/ding-126626.mp3");
+const wrong = new Audio("assets/wrong-47985.mp3");
+
 // Load high score from localStorage
 const savedHigh = parseInt(localStorage.getItem("highScore")) || 0;
 highScoreEl.textContent = `High Score: ${savedHigh}`;
@@ -22,7 +26,7 @@ centerBtn.addEventListener("click", () => {
   }
 });
 
-// Handle button click
+// Handle user button clicks
 document.querySelectorAll(".btn").forEach(button => {
   button.addEventListener("click", function () {
     if (!started) return;
@@ -36,41 +40,38 @@ document.querySelectorAll(".btn").forEach(button => {
   });
 });
 
-// Show next sequence
+// Next sequence logic
 function nextSequence() {
   userClickedPattern = [];
   level++;
   centerBtn.textContent = level;
 
-  // Disable inputs during system turn
+  // Disable button clicks during system turn
   document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "none");
 
   const randomColor = buttonColours[Math.floor(Math.random() * 4)];
   gamePattern.push(randomColor);
 
+  // Play system color flash and sound
   setTimeout(() => {
     flashButton(randomColor);
     playSound(randomColor);
 
-    // Re-enable buttons after short delay
+    // Re-enable user input after short delay
     setTimeout(() => {
       document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "auto");
     }, 300);
-
   }, 400);
 }
 
-// Flash animation
+// Animate button flash
 function flashButton(color) {
   const btn = document.getElementById(color);
   btn.classList.add("pressed");
   setTimeout(() => btn.classList.remove("pressed"), 200);
 }
 
-// Sound
-const ding = new Audio("assets/ding-126626.mp3");
-const wrong = new Audio("assets/wrong-47985.mp3");
-
+// Play sound
 function playSound(name) {
   if (name === "wrong") {
     wrong.currentTime = 0;
@@ -81,13 +82,15 @@ function playSound(name) {
   }
 }
 
-// Logic
+// Check answer
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+    // Correct till now
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(nextSequence, 1000);
     }
   } else {
+    // Wrong press
     playSound("wrong");
     document.body.classList.add("flash");
     setTimeout(() => document.body.classList.remove("flash"), 200);
@@ -106,7 +109,7 @@ function checkAnswer(currentLevel) {
   }
 }
 
-// Reset
+// Reset game
 function startOver() {
   level = 0;
   gamePattern = [];
