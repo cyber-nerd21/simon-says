@@ -5,10 +5,8 @@ let userClickedPattern = [];
 let started = false;
 let level = 0;
 
-// Show initial message
 document.getElementById("level-title").textContent = "Tap or Press Any Key to Start";
 
-// Start game on first key or screen tap
 function startGame() {
   if (!started) {
     nextSequence();
@@ -19,7 +17,6 @@ function startGame() {
 document.addEventListener("keydown", startGame);
 document.addEventListener("click", startGame);
 
-// Handle user clicks on buttons
 document.querySelectorAll(".btn").forEach(button => {
   button.addEventListener("click", function () {
     const userChosenColor = this.id.trim();
@@ -32,7 +29,6 @@ document.querySelectorAll(".btn").forEach(button => {
   });
 });
 
-// Generate the next step in the sequence
 function nextSequence() {
   userClickedPattern = [];
   level++;
@@ -45,14 +41,12 @@ function nextSequence() {
   playSound(randomColor);
 }
 
-// Flash animation (used for both game & user)
 function flashButton(color) {
   const btn = document.getElementById(color);
   btn.classList.add("pressed");
   setTimeout(() => btn.classList.remove("pressed"), 200);
 }
 
-// Play sound (same for all colors, different for wrong)
 function playSound(name) {
   const audio =
     name === "wrong"
@@ -61,17 +55,14 @@ function playSound(name) {
   audio.play();
 }
 
-// Check the user's input against the game sequence
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
-    // Correct so far
     if (userClickedPattern.length === gamePattern.length) {
-      // Entire sequence correct
       setTimeout(nextSequence, 1000);
     }
   } else {
-    // Wrong input
     playSound("wrong");
+
     document.getElementById("level-title").textContent =
       "Game Over, Tap or Press Any Key to Restart";
 
@@ -82,10 +73,8 @@ function checkAnswer(currentLevel) {
   }
 }
 
-// Reset game state
 function startOver() {
   level = 0;
   gamePattern = [];
   started = false;
 }
-
