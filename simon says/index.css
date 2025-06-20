@@ -24,6 +24,13 @@ body {
   margin-bottom: 10px;
 }
 
+.score-message {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+
 .nerd-tag {
   color: #00ffd0;
   font-weight: bold;
