@@ -1,5 +1,4 @@
 const buttonColours = ["red", "blue", "green", "yellow"];
-
 let gamePattern = [];
 let userClickedPattern = [];
 let started = false;
@@ -24,7 +23,6 @@ document.querySelectorAll(".btn").forEach(button => {
 
     flashButton(userChosenColor);
     playSound(userChosenColor);
-
     checkAnswer(userClickedPattern.length - 1);
   });
 });
@@ -62,7 +60,6 @@ function checkAnswer(currentLevel) {
     }
   } else {
     playSound("wrong");
-
     document.getElementById("level-title").textContent =
       "Game Over, Tap or Press Any Key to Restart";
 
@@ -78,3 +75,4 @@ function startOver() {
   gamePattern = [];
   started = false;
 }
+
