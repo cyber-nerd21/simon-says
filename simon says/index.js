@@ -4,7 +4,6 @@ let userClickedPattern = [];
 let started = false;
 let level = 0;
 
-// DOM Elements
 const centerBtn = document.getElementById("center-btn");
 const scoreMsgEl = document.getElementById("score-msg");
 const highScoreEl = document.getElementById("high-score");
@@ -37,11 +36,14 @@ document.querySelectorAll(".btn").forEach(button => {
   });
 });
 
-// Generate next color in sequence
+// Show next sequence
 function nextSequence() {
   userClickedPattern = [];
   level++;
   centerBtn.textContent = level;
+
+  // Disable inputs during system turn
+  document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "none");
 
   const randomColor = buttonColours[Math.floor(Math.random() * 4)];
   gamePattern.push(randomColor);
@@ -49,40 +51,49 @@ function nextSequence() {
   setTimeout(() => {
     flashButton(randomColor);
     playSound(randomColor);
-  }, 300);
+
+    // Re-enable buttons after short delay
+    setTimeout(() => {
+      document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "auto");
+    }, 300);
+
+  }, 400);
 }
 
-// Animate button press
+// Flash animation
 function flashButton(color) {
   const btn = document.getElementById(color);
   btn.classList.add("pressed");
   setTimeout(() => btn.classList.remove("pressed"), 200);
 }
 
-// Play sound
+// Sound
+const ding = new Audio("assets/ding-126626.mp3");
+const wrong = new Audio("assets/wrong-47985.mp3");
+
 function playSound(name) {
-  const audio =
-    name === "wrong"
-      ? new Audio("assets/wrong-47985.mp3")
-      : new Audio("assets/ding-126626.mp3");
-  audio.play();
+  if (name === "wrong") {
+    wrong.currentTime = 0;
+    wrong.play();
+  } else {
+    ding.currentTime = 0;
+    ding.play();
+  }
 }
 
-// Check user's input
+// Logic
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(nextSequence, 1000);
     }
   } else {
-    // Game Over
     playSound("wrong");
     document.body.classList.add("flash");
     setTimeout(() => document.body.classList.remove("flash"), 200);
 
     scoreMsgEl.textContent = `You reached Level ${level}`;
 
-    // High score check
     const currentHigh = parseInt(localStorage.getItem("highScore")) || 0;
     if (level > currentHigh) {
       localStorage.setItem("highScore", level);
@@ -95,7 +106,7 @@ function checkAnswer(currentLevel) {
   }
 }
 
-// Reset everything
+// Reset
 function startOver() {
   level = 0;
   gamePattern = [];
