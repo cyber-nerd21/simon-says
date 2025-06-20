@@ -8,7 +8,7 @@ const centerBtn = document.getElementById("center-btn");
 
 centerBtn.addEventListener("click", () => {
   if (!started) {
-    centerBtn.textContent = ""; // clear START
+    centerBtn.textContent = "";
     nextSequence();
     started = true;
   }
@@ -20,6 +20,7 @@ document.querySelectorAll(".btn").forEach(button => {
 
     const userChosenColor = this.id.trim();
     userClickedPattern.push(userChosenColor);
+
     flashButton(userChosenColor);
     playSound(userChosenColor);
     checkAnswer(userClickedPattern.length - 1);
@@ -59,8 +60,9 @@ function checkAnswer(currentLevel) {
     }
   } else {
     playSound("wrong");
-    document.body.classList.add("game-over");
-    setTimeout(() => document.body.classList.remove("game-over"), 200);
+    document.body.classList.add("flash");
+    setTimeout(() => document.body.classList.remove("flash"), 200);
+
     centerBtn.textContent = "RESTART";
     startOver();
   }
@@ -70,5 +72,7 @@ function startOver() {
   level = 0;
   gamePattern = [];
   started = false;
+  userClickedPattern = [];
 }
+
 
