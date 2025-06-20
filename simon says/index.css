@@ -49,7 +49,8 @@ body {
   height: 50%;
   cursor: pointer;
   border: 4px solid black;
-  transition: opacity 0.2s, transform 0.15s;
+  /* ❌ Removed all transform-related transitions to fix hover "dab" */
+  transition: opacity 0.2s;
 }
 
 .green {
@@ -101,17 +102,10 @@ body {
   word-break: break-word;
 }
 
-/* PRESSED / TAPPED EFFECT */
+/* PRESSED EFFECT (ONLY WHEN FLASHING) */
 .pressed {
   opacity: 0.5;
-  transform: scale(0.95);
-  transition: all 0.15s ease;
-}
-
-/* Optional: On click only (no hover) */
-.btn:active {
-  opacity: 0.8;
-  transform: scale(0.97);
+  transition: opacity 0.15s;
 }
 
 /* ❌ Game Over Flash */
