@@ -18,15 +18,17 @@ body {
   margin: 0 2px;
 }
 
-.s1 { color: red; }
-.s2 { color: green; }
-.s3 { color: yellow; }
-.s4 { color: blue; }
-.s5 { color: white; }
-.s6 { color: red; }
-.s7 { color: yellow; }
-.s8 { color: green; }
-.s9 { color: blue; }
+.subtitle {
+  font-size: 1.2rem;
+  color: #bbb;
+  margin-bottom: 10px;
+}
+
+.nerd-tag {
+  color: #00ffd0;
+  font-weight: bold;
+}
+
 
 .circle-board {
   position: relative;
