@@ -34,14 +34,14 @@ document.querySelectorAll(".btn").forEach(button => {
     const userChosenColor = this.id;
     userClickedPattern.push(userChosenColor);
 
-    flashButton(userChosenColor); // ✅ Flash on click
-    playSound(userChosenColor);   // ✅ Ting on click
+    // ✅ Flash + Sound when user clicks
+    userFeedback(userChosenColor);
 
     checkAnswer(userClickedPattern.length - 1);
   });
 });
 
-// Show system sequence
+// Show next color
 function nextSequence() {
   userClickedPattern = [];
   level++;
@@ -53,8 +53,7 @@ function nextSequence() {
   gamePattern.push(randomColor);
 
   setTimeout(() => {
-    flashButton(randomColor);    // ✅ Flash system button
-    playSound(randomColor);      // ✅ Ting system sound
+    systemFeedback(randomColor);
 
     setTimeout(() => {
       document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "auto");
@@ -62,17 +61,25 @@ function nextSequence() {
   }, 400);
 }
 
-// Animate flash
-function flashButton(color) {
+// ✅ For system turn
+function systemFeedback(color) {
   const btn = document.getElementById(color);
-  if (!btn) return;
   btn.classList.add("pressed");
+  playSound("ding");
   setTimeout(() => btn.classList.remove("pressed"), 200);
 }
 
-// Play sound
-function playSound(name) {
-  if (name === "wrong") {
+// ✅ For user input
+function userFeedback(color) {
+  const btn = document.getElementById(color);
+  btn.classList.add("pressed");
+  playSound("ding");
+  setTimeout(() => btn.classList.remove("pressed"), 150);
+}
+
+// Sound
+function playSound(type) {
+  if (type === "wrong") {
     wrong.currentTime = 0;
     wrong.play();
   } else {
@@ -81,7 +88,7 @@ function playSound(name) {
   }
 }
 
-// Check user input
+// Check answer
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
     if (userClickedPattern.length === gamePattern.length) {
@@ -113,3 +120,4 @@ function startOver() {
   userClickedPattern = [];
   started = false;
 }
+
