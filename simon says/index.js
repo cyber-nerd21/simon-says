@@ -12,11 +12,11 @@ const highScoreEl = document.getElementById("high-score");
 const ding = new Audio("assets/ding-126626.mp3");
 const wrong = new Audio("assets/wrong-47985.mp3");
 
-// Load high score from localStorage
+// Load high score
 const savedHigh = parseInt(localStorage.getItem("highScore")) || 0;
 highScoreEl.textContent = `High Score: ${savedHigh}`;
 
-// Start Game
+// Start game
 centerBtn.addEventListener("click", () => {
   if (!started) {
     centerBtn.textContent = "";
@@ -26,7 +26,7 @@ centerBtn.addEventListener("click", () => {
   }
 });
 
-// Handle user button clicks
+// Handle user clicks
 document.querySelectorAll(".btn").forEach(button => {
   button.addEventListener("click", function () {
     if (!started) return;
@@ -34,39 +34,38 @@ document.querySelectorAll(".btn").forEach(button => {
     const userChosenColor = this.id;
     userClickedPattern.push(userChosenColor);
 
-    flashButton(userChosenColor);
-    playSound(userChosenColor);
+    flashButton(userChosenColor); // ✅ Flash on click
+    playSound(userChosenColor);   // ✅ Ting on click
+
     checkAnswer(userClickedPattern.length - 1);
   });
 });
 
-// Next sequence logic
+// Show system sequence
 function nextSequence() {
   userClickedPattern = [];
   level++;
   centerBtn.textContent = level;
 
-  // Disable button clicks during system turn
   document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "none");
 
   const randomColor = buttonColours[Math.floor(Math.random() * 4)];
   gamePattern.push(randomColor);
 
-  // Play system color flash and sound
   setTimeout(() => {
-    flashButton(randomColor);
-    playSound(randomColor);
+    flashButton(randomColor);    // ✅ Flash system button
+    playSound(randomColor);      // ✅ Ting system sound
 
-    // Re-enable user input after short delay
     setTimeout(() => {
       document.querySelectorAll(".btn").forEach(btn => btn.style.pointerEvents = "auto");
     }, 300);
   }, 400);
 }
 
-// Animate button flash
+// Animate flash
 function flashButton(color) {
   const btn = document.getElementById(color);
+  if (!btn) return;
   btn.classList.add("pressed");
   setTimeout(() => btn.classList.remove("pressed"), 200);
 }
@@ -82,15 +81,13 @@ function playSound(name) {
   }
 }
 
-// Check answer
+// Check user input
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
-    // Correct till now
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(nextSequence, 1000);
     }
   } else {
-    // Wrong press
     playSound("wrong");
     document.body.classList.add("flash");
     setTimeout(() => document.body.classList.remove("flash"), 200);
