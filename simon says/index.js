@@ -4,11 +4,19 @@ let userClickedPattern = [];
 let started = false;
 let level = 0;
 
+// Center button
 const centerBtn = document.getElementById("center-btn");
+// Score message & high score display
+const scoreMsgEl = document.getElementById("score-msg");
+const highScoreEl = document.getElementById("high-score");
+
+// On load, display high score from localStorage
+highScoreEl.textContent = `High Score: ${localStorage.getItem("highScore") || 0}`;
 
 centerBtn.addEventListener("click", () => {
   if (!started) {
     centerBtn.textContent = "";
+    scoreMsgEl.textContent = ""; // clear any previous message
     nextSequence();
     started = true;
   }
@@ -63,6 +71,17 @@ function checkAnswer(currentLevel) {
     document.body.classList.add("flash");
     setTimeout(() => document.body.classList.remove("flash"), 200);
 
+    // Show reached level
+    scoreMsgEl.textContent = `You reached Level ${level}`;
+
+    // High score logic
+    const prevHigh = localStorage.getItem("highScore") || 0;
+    if (level > prevHigh) {
+      localStorage.setItem("highScore", level);
+      highScoreEl.textContent = `🏆 New High Score: ${level}`;
+      highScoreEl.style.color = "#00ffcc";
+    }
+
     centerBtn.textContent = "RESTART";
     startOver();
   }
@@ -74,5 +93,4 @@ function startOver() {
   started = false;
   userClickedPattern = [];
 }
-
 
